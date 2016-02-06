@@ -30,7 +30,7 @@
       <input id='gps' type='checkbox' class='item-toggle' true>
     </label>
 
-    Your city if no GPS:
+    Enter your address:
         <label class='item'>
           <div class='item-input-wrapper'>
             <input type='text' class='item-input' input id='input_city' placeholder='Input field')>
@@ -68,13 +68,7 @@
       Starts at 10am - Ends at 10pm
     </div>
     </div>
-    <label class='item'>
-      White icons
-      <input type='checkbox' class='item-toggle'  input id='toggle_bw_icons'>
-    </label>
-        <div class='item-container-footer'>
-    Only applies to Pebble Time.
-  </div>
+
   </div>    
   </div>
 </div>  
@@ -150,8 +144,7 @@
     var radio_refresh = document.getElementById('radio_refresh');
 
     var toggle_vibration = document.getElementById('toggle_vibration');
-    var toggle_bw_icons = document.getElementById('toggle_bw_icons');
-
+    
     var color_right_back = document.getElementById('color_right_back');
     var color_left_back = document.getElementById('color_left_back');
     var color_hours = document.getElementById('color_hours');
@@ -167,8 +160,7 @@
       'radio_units': radio_units.checked,
       'radio_refresh': radio_refresh.checked,
       'toggle_vibration': toggle_vibration.checked,
-      'toggle_bw_icons': toggle_bw_icons.checked,
-
+      
        'color_right_back': color_right_back.value,
        'color_left_back': color_left_back.value,
        'color_hours': color_hours.value,
@@ -184,7 +176,7 @@
     localStorage['radio_units'] = options['radio_units'];
     localStorage['radio_refresh'] = options['radio_refresh'];
     localStorage['toggle_vibration'] = options['toggle_vibration'];
-    localStorage['toggle_bw_icons'] = options['toggle_bw_icons'];
+   
     
     localStorage['color_right_back'] = options['color_right_back'];
     localStorage['color_left_back'] = options['color_left_back'];
@@ -226,7 +218,7 @@
     var radio_units = document.getElementById('radio_units');
     var radio_refresh = document.getElementById('radio_refresh');
     var toggle_vibration = document.getElementById('toggle_vibration');
-    var toggle_bw_icons = document.getElementById('toggle_bw_icons');
+   
     var color_right_back = document.getElementById('color_right_back');
     var color_left_back = document.getElementById('color_left_back');
     var color_hours = document.getElementById('color_hours');
@@ -239,7 +231,6 @@
     radio_units.checked =  JSON.parse(localStorage['radio_units']);
     radio_refresh.checked =  JSON.parse(localStorage['radio_refresh']);
     toggle_vibration.checked =  JSON.parse(localStorage['toggle_vibration']);
-    toggle_bw_icons.checked =  JSON.parse(localStorage['toggle_bw_icons']);
     
     color_right_back.value =  localStorage['color_right_back'];
     color_left_back.value =  localStorage['color_left_back'];
