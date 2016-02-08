@@ -55,6 +55,22 @@
   </div>
 </div>
 
+
+<div class='item-container'>
+  <div class='item-container-header'>Others</div>
+  <div class='item-container-content'>
+
+    <label class='item'>
+     Start with graph
+      <input type='checkbox' class='item-toggle' input id='toggle_graph'>
+    </label>
+
+    </div>
+
+  </div>    
+  </div>
+
+
   <div style="display:none;">
 <div class='item-container'>
   <div class='item-container-header'>Others</div>
@@ -144,6 +160,7 @@
     var radio_refresh = document.getElementById('radio_refresh');
 
     var toggle_vibration = document.getElementById('toggle_vibration');
+     var toggle_graph = document.getElementById('toggle_graph');
     
     var color_right_back = document.getElementById('color_right_back');
     var color_left_back = document.getElementById('color_left_back');
@@ -160,7 +177,8 @@
       'radio_units': radio_units.checked,
       'radio_refresh': radio_refresh.checked,
       'toggle_vibration': toggle_vibration.checked,
-      
+       'toggle_graph': toggle_graph.checked,
+
        'color_right_back': color_right_back.value,
        'color_left_back': color_left_back.value,
        'color_hours': color_hours.value,
@@ -176,6 +194,7 @@
     localStorage['radio_units'] = options['radio_units'];
     localStorage['radio_refresh'] = options['radio_refresh'];
     localStorage['toggle_vibration'] = options['toggle_vibration'];
+    localStorage['toggle_graph'] = options['toggle_graph'];
    
     
     localStorage['color_right_back'] = options['color_right_back'];
@@ -218,6 +237,7 @@
     var radio_units = document.getElementById('radio_units');
     var radio_refresh = document.getElementById('radio_refresh');
     var toggle_vibration = document.getElementById('toggle_vibration');
+        var toggle_graph = document.getElementById('toggle_graph');
    
     var color_right_back = document.getElementById('color_right_back');
     var color_left_back = document.getElementById('color_left_back');
@@ -231,7 +251,7 @@
     radio_units.checked =  JSON.parse(localStorage['radio_units']);
     radio_refresh.checked =  JSON.parse(localStorage['radio_refresh']);
     toggle_vibration.checked =  JSON.parse(localStorage['toggle_vibration']);
-
+            toggle_graph.checked =  JSON.parse(localStorage['toggle_graph']);
     color_right_back.value =  localStorage['color_right_back'];
     color_left_back.value =  localStorage['color_left_back'];
     color_hours.value =  localStorage['color_hours'];
