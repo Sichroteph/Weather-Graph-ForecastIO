@@ -78,7 +78,7 @@
           (Optional) Forecast.io API key:
         <label class='item'>
           <div class='item-input-wrapper'>
-            <input type='text' class='item-input' input id='input_city' placeholder='Input field')>
+            <input type='text' class='item-input' input id='input_api' placeholder='Input field')>
           </div>
         </label>
                <div class='item-container-footer'>
@@ -175,6 +175,7 @@
   function getConfigData() {
     var gps = document.getElementById('gps');
     var input_city = document.getElementById('input_city');
+    var input_api = document.getElementById('input_api');
 
     var radio_units = document.getElementById('radio_units');
     var radio_refresh = document.getElementById('radio_refresh');
@@ -193,6 +194,7 @@
     var options = {
       'gps': gps.checked,
       'input_city': input_city.value,
+      'input_api': input_api.value,
     
       'radio_units': radio_units.checked,
       'radio_refresh': radio_refresh.checked,
@@ -210,6 +212,7 @@
     // Save for next launch
     localStorage['gps'] = options['gps'];
     localStorage['input_city'] = options['input_city'];
+    localStorage['input_api'] = options['input_api'];
     
     localStorage['radio_units'] = options['radio_units'];
     localStorage['radio_refresh'] = options['radio_refresh'];
@@ -253,6 +256,7 @@
   (function() {
     var gps = document.getElementById('gps');
     var input_city = document.getElementById('input_city');
+    var input_api = document.getElementById('input_api');
  
     var radio_units = document.getElementById('radio_units');
     var radio_refresh = document.getElementById('radio_refresh');
@@ -267,6 +271,7 @@
 
     gps.checked = JSON.parse(localStorage['gps']);
     input_city.value =  localStorage['input_city'];
+    input_api.value =  localStorage['input_api'];
 
     radio_units.checked =  JSON.parse(localStorage['radio_units']);
     radio_refresh.checked =  JSON.parse(localStorage['radio_refresh']);
