@@ -4,6 +4,7 @@
     <title>Weather Graph</title>
     <link rel='stylesheet' type='text/css' href='css/slate.min.css'>
     <script src='js/slate.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
     <style>
       .title {
         padding: 15px 10px;
@@ -80,7 +81,7 @@
       </div>
     </div>
 
-    <!-- Responsive table with city name, longitude, and latitude -->
+    <!-- Responsive table with city name, latitude, and longitude -->
     <div class='item-container'>
       <div class='item-container-header'>Cities</div>
       <div class='item-container-content'>
@@ -89,16 +90,16 @@
             <thead>
               <tr>
                 <th>City Name</th>
-                <th>Longitude</th>
                 <th>Latitude</th>
+                <th>Longitude</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td><input type='text' placeholder='City Name'></td>
-                <td><input type='text' placeholder='Longitude'></td>
                 <td><input type='text' placeholder='Latitude'></td>
+                <td><input type='text' placeholder='Longitude'></td>
                 <td><button type='button' onclick='deleteRow(this)'>Delete</button></td>
               </tr>
             </tbody>
@@ -125,14 +126,20 @@
     </div>
 
     <script>
+      // Initialize sortable rows
+      var sortable = new Sortable(document.querySelector('tbody'), {
+        animation: 150, // Smooth dragging effect
+        handle: 'tr'    // Drag entire rows
+      });
+
       // Add a new row to the table
-      function addRow(city = '', longitude = '', latitude = '') {
+      function addRow(city = '', latitude = '', longitude = '') {
         var table = document.getElementById('cityTable').getElementsByTagName('tbody')[0];
         var newRow = table.insertRow();
         newRow.innerHTML = `
           <td><input type='text' placeholder='City Name' value='${city}'></td>
-          <td><input type='text' placeholder='Longitude' value='${longitude}'></td>
           <td><input type='text' placeholder='Latitude' value='${latitude}'></td>
+          <td><input type='text' placeholder='Longitude' value='${longitude}'></td>
           <td><button type='button' onclick='deleteRow(this)'>Delete</button></td>`;
       }
 
@@ -152,10 +159,10 @@
         var cities = [];
         for (var i = 0; i < cityTable.rows.length; i++) {
           var row = cityTable.rows[i];
-          var cityName = row.cells[0].querySelector('input').value;
-          var longitude = row.cells[1].querySelector('input').value;
-          var latitude = row.cells[2].querySelector('input').value;
-          cities.push({ cityName, longitude, latitude });
+          var cityName = row.cells[0].querySelector('input').value.toUpperCase(); // Convert city name to uppercase
+          var latitude = row.cells[1].querySelector('input').value;
+          var longitude = row.cells[2].querySelector('input').value;
+          cities.push({ cityName, latitude, longitude });
         }
 
         var options = {
@@ -185,7 +192,7 @@
           var cityTable = document.getElementById('cityTable').getElementsByTagName('tbody')[0];
           cityTable.innerHTML = ''; // Clear existing rows
           options.cities.forEach(function(city) {
-            addRow(city.cityName, city.longitude, city.latitude);
+            addRow(city.cityName, city.latitude, city.longitude);
           });
         }
       }
