@@ -169,7 +169,9 @@
                 var cityName = row.cells[0].querySelector('input').value.toUpperCase();
                 var latitude = row.cells[1].querySelector('input').value;
                 var longitude = row.cells[2].querySelector('input').value;
-                cities.push({ cityName, latitude, longitude });
+                if (cityName) {
+                    cities.push({ cityName, latitude, longitude });
+                }
             }
 
             var options = {
