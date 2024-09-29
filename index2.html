@@ -14,19 +14,41 @@
         color: #888888;
         text-align: center;
       }
+      /* Add responsiveness for smaller screens */
+      .table-container {
+        width: 100%;
+        overflow-x: auto; /* Enables horizontal scroll if needed */
+      }
       table {
         width: 100%;
         border-collapse: collapse;
         margin-top: 10px;
+        min-width: 600px; /* Ensures the table has a minimum width */
       }
       table, th, td {
         border: 1px solid black;
         text-align: left;
         padding: 5px;
       }
+      input[type='text'] {
+        width: 100%;
+        box-sizing: border-box; /* Ensures the input fields fit within table cells */
+      }
       .button-container {
         text-align: center;
         margin-top: 20px;
+      }
+      /* Mobile friendly adjustments */
+      @media (max-width: 768px) {
+        .item-container-header {
+          font-size: 1.1em;
+        }
+        table {
+          min-width: 100%;
+        }
+        .button-container input {
+          width: 100%;
+        }
       }
     </style>
   </head>
@@ -58,28 +80,30 @@
       </div>
     </div>
 
-    <!-- Table with city name, longitude, and latitude -->
+    <!-- Responsive table with city name, longitude, and latitude -->
     <div class='item-container'>
       <div class='item-container-header'>Cities</div>
       <div class='item-container-content'>
-        <table id='cityTable'>
-          <thead>
-            <tr>
-              <th>City Name</th>
-              <th>Longitude</th>
-              <th>Latitude</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><input type='text' placeholder='City Name'></td>
-              <td><input type='text' placeholder='Longitude'></td>
-              <td><input type='text' placeholder='Latitude'></td>
-              <td><button type='button' onclick='deleteRow(this)'>Delete</button></td>
-            </tr>
-          </tbody>
-        </table>
+        <div class='table-container'>
+          <table id='cityTable'>
+            <thead>
+              <tr>
+                <th>City Name</th>
+                <th>Longitude</th>
+                <th>Latitude</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type='text' placeholder='City Name'></td>
+                <td><input type='text' placeholder='Longitude'></td>
+                <td><input type='text' placeholder='Latitude'></td>
+                <td><button type='button' onclick='deleteRow(this)'>Delete</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <button type='button' onclick='addRow()'>Add Row</button>
       </div>
     </div>
@@ -102,13 +126,13 @@
 
     <script>
       // Add a new row to the table
-      function addRow() {
+      function addRow(city = '', longitude = '', latitude = '') {
         var table = document.getElementById('cityTable').getElementsByTagName('tbody')[0];
         var newRow = table.insertRow();
         newRow.innerHTML = `
-          <td><input type='text' placeholder='City Name'></td>
-          <td><input type='text' placeholder='Longitude'></td>
-          <td><input type='text' placeholder='Latitude'></td>
+          <td><input type='text' placeholder='City Name' value='${city}'></td>
+          <td><input type='text' placeholder='Longitude' value='${longitude}'></td>
+          <td><input type='text' placeholder='Latitude' value='${latitude}'></td>
           <td><button type='button' onclick='deleteRow(this)'>Delete</button></td>`;
       }
 
@@ -140,8 +164,30 @@
           'cities': cities
         };
 
+        // Save data to localStorage
+        localStorage.setItem('weatherConfig', JSON.stringify(options));
+
         console.log('Got options: ' + JSON.stringify(options));
         return options;
+      }
+
+      // Load data from localStorage
+      function loadConfigData() {
+        var savedConfig = localStorage.getItem('weatherConfig');
+        if (savedConfig) {
+          var options = JSON.parse(savedConfig);
+
+          document.getElementById('gps').checked = options.gps;
+          var unitRadio = document.querySelector(`input[name="radio_units"][value="${options.unit}"]`);
+          if (unitRadio) unitRadio.checked = true;
+
+          // Load cities into the table
+          var cityTable = document.getElementById('cityTable').getElementsByTagName('tbody')[0];
+          cityTable.innerHTML = ''; // Clear existing rows
+          options.cities.forEach(function(city) {
+            addRow(city.cityName, city.longitude, city.latitude);
+          });
+        }
       }
 
       // Submit button event handler
@@ -152,6 +198,10 @@
         document.location = return_to + encodeURIComponent(JSON.stringify(getConfigData()));
       });
 
+      // Load the config data when the page is loaded
+      window.onload = function() {
+        loadConfigData();
+      };
     </script>
   </body>
 </html>
