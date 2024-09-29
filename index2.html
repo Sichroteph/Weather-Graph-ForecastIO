@@ -1,214 +1,222 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>Weather Graph</title>
     <link rel='stylesheet' type='text/css' href='css/slate.min.css'>
     <script src='js/slate.min.js'></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
     <style>
-      .title {
-        padding: 15px 10px;
-        text-transform: uppercase;
-        font-family: 'PT Sans', sans-serif;
-        font-size: 1.2em;
-        font-weight: 500;
-        color: #888888;
-        text-align: center;
-      }
-      /* Add responsiveness for smaller screens */
-      .table-container {
-        width: 100%;
-        overflow-x: auto; /* Enables horizontal scroll if needed */
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-        min-width: 600px; /* Ensures the table has a minimum width */
-      }
-      table, th, td {
-        border: 1px solid black;
-        text-align: left;
-        padding: 5px;
-      }
-      input[type='text'] {
-        width: 100%;
-        box-sizing: border-box; /* Ensures the input fields fit within table cells */
-      }
-      .button-container {
-        text-align: center;
-        margin-top: 20px;
-      }
-      /* Mobile friendly adjustments */
-      @media (max-width: 768px) {
-        .item-container-header {
-          font-size: 1.1em;
+        .title {
+            padding: 15px 10px;
+            text-transform: uppercase;
+            font-family: 'PT Sans', sans-serif;
+            font-size: 1.2em;
+            font-weight: 500;
+            color: #888888;
+            text-align: center;
         }
-        table {
-          min-width: 100%;
-        }
-        .button-container input {
-          width: 100%;
-        }
-      }
-    </style>
-  </head>
 
-  <body>
+        /* Add responsiveness for smaller screens */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            /* Enables horizontal scroll if needed */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            min-width: 600px;
+            /* Ensures the table has a minimum width */
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            text-align: left;
+            padding: 5px;
+        }
+
+        input[type='text'] {
+            width: 100%;
+            box-sizing: border-box;
+            /* Ensures the input fields fit within table cells */
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Mobile friendly adjustments */
+        @media (max-width: 768px) {
+            .item-container-header {
+                font-size: 1.1em;
+            }
+
+            table {
+                min-width: 100%;
+            }
+
+            .button-container input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
     <h1 class='title'>Weather Graph</h1>
 
     <div class='item-container'>
-      <div class='item-container-header'>Position</div>
-      <div class='item-container-content'>
-        <label class='item'>
-          GPS
-          <input id='gps' type='checkbox' class='item-toggle'>
-        </label>
-      </div>
-    </div>
-
-    <div class='item-container'>
-      <div class='item-container-header'>Units</div>
-      <div class='item-container-content'>
-        <label class='item'>
-          Imperial
-          <input type='radio' class='item-radio' name='radio_units' value='imperial'>
-        </label>
-        <label class='item'>
-          Metric
-          <input type='radio' class='item-radio' name='radio_units' value='metric' checked>
-        </label>
-      </div>
-    </div>
-
-    <!-- Responsive table with city name, latitude, and longitude -->
-    <div class='item-container'>
-      <div class='item-container-header'>Cities</div>
-      <div class='item-container-content'>
-        <div class='table-container'>
-          <table id='cityTable'>
-            <thead>
-              <tr>
-                <th>City Name</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><input type='text' placeholder='City Name'></td>
-                <td><input type='text' placeholder='Latitude'></td>
-                <td><input type='text' placeholder='Longitude'></td>
-                <td><button type='button' onclick='deleteRow(this)'>Delete</button></td>
-              </tr>
-            </tbody>
-          </table>
+        <div class='item-container-header'>Position</div>
+        <div class='item-container-content'>
+            <label class='item'>
+                GPS
+                <input id='gps' type='checkbox' class='item-toggle'>
+            </label>
         </div>
-        <button type='button' onclick='addRow()'>Add Row</button>
-      </div>
     </div>
 
     <div class='item-container'>
-      <div class='button-container'>
-        <input id='submit_button' type='button' class='item-button' value='SUBMIT'>
-      </div>
+        <div class='item-container-header'>Units</div>
+        <div class='item-container-content'>
+            <label class='item'>
+                Imperial
+                <input type='radio' class='item-radio' name='radio_units' value='imperial'>
+            </label>
+            <label class='item'>
+                Metric
+                <input type='radio' class='item-radio' name='radio_units' value='metric' checked>
+            </label>
+        </div>
+    </div>
+
+    <!-- Responsive table with city name, longitude, and latitude -->
+    <div class='item-container'>
+        <div class='item-container-header'>Cities</div>
+        <div class='item-container-content'>
+            <div class='table-container'>
+                <table id='cityTable'>
+                    <thead>
+                        <tr>
+                            <th>City Name</th>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type='text' placeholder='City Name'></td>
+                            <td><input type='text' placeholder='Latitude'></td>
+                            <td><input type='text' placeholder='Longitude'></td>
+                            <td><button type='button' onclick='deleteRow(this)'>Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button type='button' onclick='addRow()'>Add city</button>
+        </div>
+    </div>
+
+    <div class='item-container'>
+        <div class='button-container'>
+            <input id='submit_button' type='button' class='item-button' value='SUBMIT'>
+        </div>
     </div>
 
     <!-- Image at the end of the document -->
     <div class='item-container'>
-      <div class='item-container-header'></div>
-      <div class='item-container-content'>
-        <label class='item'>
-          <img src="lwYK0MI_.png" style="width:300px;height:360px;">
-        </label>
-      </div>
+        <div class='item-container-header'></div>
+        <div class='item-container-content'>
+            <label class='item'>
+                <img src="lwYK0MI_.png" style="width:300px;height:360px;">
+            </label>
+        </div>
     </div>
 
     <script>
-      // Initialize sortable rows
-      var sortable = new Sortable(document.querySelector('tbody'), {
-        animation: 150, // Smooth dragging effect
-        handle: 'tr'    // Drag entire rows
-      });
-
-      // Add a new row to the table
-      function addRow(city = '', latitude = '', longitude = '') {
-        var table = document.getElementById('cityTable').getElementsByTagName('tbody')[0];
-        var newRow = table.insertRow();
-        newRow.innerHTML = `
+        // Add a new row to the table
+        function addRow(city = '', latitude = '', longitude = '') {
+            var table = document.getElementById('cityTable').getElementsByTagName('tbody')[0];
+            var newRow = table.insertRow();
+            newRow.innerHTML = `
           <td><input type='text' placeholder='City Name' value='${city}'></td>
           <td><input type='text' placeholder='Latitude' value='${latitude}'></td>
           <td><input type='text' placeholder='Longitude' value='${longitude}'></td>
           <td><button type='button' onclick='deleteRow(this)'>Delete</button></td>`;
-      }
-
-      // Delete a row from the table
-      function deleteRow(button) {
-        var row = button.parentNode.parentNode;
-        row.parentNode.removeChild(row);
-      }
-
-      // Get configured data
-      function getConfigData() {
-        var gps = document.getElementById('gps').checked;
-        var unit = document.querySelector('input[name="radio_units"]:checked').value;
-
-        // Retrieve table data
-        var cityTable = document.getElementById('cityTable').getElementsByTagName('tbody')[0];
-        var cities = [];
-        for (var i = 0; i < cityTable.rows.length; i++) {
-          var row = cityTable.rows[i];
-          var cityName = row.cells[0].querySelector('input').value.toUpperCase(); // Convert city name to uppercase
-          var latitude = row.cells[1].querySelector('input').value;
-          var longitude = row.cells[2].querySelector('input').value;
-          cities.push({ cityName, latitude, longitude });
         }
 
-        var options = {
-          'gps': gps,
-          'unit': unit,
-          'cities': cities
+        // Delete a row from the table
+        function deleteRow(button) {
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+
+        // Get configured data
+        function getConfigData() {
+            var gps = document.getElementById('gps').checked;
+            var unit = document.querySelector('input[name="radio_units"]:checked').value;
+
+            // Retrieve table data
+            var cityTable = document.getElementById('cityTable').getElementsByTagName('tbody')[0];
+            var cities = [];
+            for (var i = 0; i < cityTable.rows.length; i++) {
+                var row = cityTable.rows[i];
+                var cityName = row.cells[0].querySelector('input').value.toUpperCase();
+                var latitude = row.cells[1].querySelector('input').value;
+                var longitude = row.cells[2].querySelector('input').value;
+                cities.push({ cityName, latitude, longitude });
+            }
+
+            var options = {
+                'gps': gps,
+                'unit': unit,
+                'cities': cities
+            };
+
+            // Save data to localStorage
+            localStorage.setItem('weatherConfig', JSON.stringify(options));
+
+            console.log('Got options: ' + JSON.stringify(options));
+            return options;
+        }
+
+        // Load data from localStorage
+        function loadConfigData() {
+            var savedConfig = localStorage.getItem('weatherConfig');
+            if (savedConfig) {
+                var options = JSON.parse(savedConfig);
+
+                document.getElementById('gps').checked = options.gps;
+                var unitRadio = document.querySelector(`input[name="radio_units"][value="${options.unit}"]`);
+                if (unitRadio) unitRadio.checked = true;
+
+                // Load cities into the table
+                var cityTable = document.getElementById('cityTable').getElementsByTagName('tbody')[0];
+                cityTable.innerHTML = ''; // Clear existing rows
+                options.cities.forEach(function (city) {
+                    addRow(city.cityName, city.latitude, city.longitude);
+                });
+            }
+        }
+
+        // Submit button event handler
+        var submitButton = document.getElementById('submit_button');
+        submitButton.addEventListener('click', function () {
+            console.log('Submit');
+            var return_to = 'pebblejs://close#';  // Default return URL
+            document.location = return_to + encodeURIComponent(JSON.stringify(getConfigData()));
+        });
+
+        // Load the config data when the page is loaded
+        window.onload = function () {
+            loadConfigData();
         };
-
-        // Save data to localStorage
-        localStorage.setItem('weatherConfig', JSON.stringify(options));
-
-        console.log('Got options: ' + JSON.stringify(options));
-        return options;
-      }
-
-      // Load data from localStorage
-      function loadConfigData() {
-        var savedConfig = localStorage.getItem('weatherConfig');
-        if (savedConfig) {
-          var options = JSON.parse(savedConfig);
-
-          document.getElementById('gps').checked = options.gps;
-          var unitRadio = document.querySelector(`input[name="radio_units"][value="${options.unit}"]`);
-          if (unitRadio) unitRadio.checked = true;
-
-          // Load cities into the table
-          var cityTable = document.getElementById('cityTable').getElementsByTagName('tbody')[0];
-          cityTable.innerHTML = ''; // Clear existing rows
-          options.cities.forEach(function(city) {
-            addRow(city.cityName, city.latitude, city.longitude);
-          });
-        }
-      }
-
-      // Submit button event handler
-      var submitButton = document.getElementById('submit_button');
-      submitButton.addEventListener('click', function() {
-        console.log('Submit');
-        var return_to = 'pebblejs://close#';  // Default return URL
-        document.location = return_to + encodeURIComponent(JSON.stringify(getConfigData()));
-      });
-
-      // Load the config data when the page is loaded
-      window.onload = function() {
-        loadConfigData();
-      };
     </script>
-  </body>
+</body>
+
 </html>
