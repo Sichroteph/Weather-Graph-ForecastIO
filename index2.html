@@ -50,6 +50,7 @@
             margin-top: 20px;
         }
 
+
         /* Mobile friendly adjustments */
         @media (max-width: 768px) {
             .item-container-header {
@@ -74,7 +75,7 @@
         <div class='item-container-header'>Position</div>
         <div class='item-container-content'>
             <label class='item'>
-                GPS
+                GPS panel
                 <input id='gps' type='checkbox' class='item-toggle'>
             </label>
         </div>
@@ -138,6 +139,16 @@
         </div>
     </div>
 
+    <!-- Button for PayPal donation -->
+    <div class="item-container">
+        <div class="button-container">
+            <form action="https://www.paypal.com/donate" method="post" target="_blank">
+                <input type="hidden" name="hosted_button_id" value="EQZSE727VQB88">
+                <input type="submit" class="item-button" value="Donate via PayPal">
+            </form>
+        </div>
+    </div>
+
     <script>
         // Add a new row to the table
         function addRow(city = '', latitude = '', longitude = '') {
@@ -166,10 +177,16 @@
             var cities = [];
             for (var i = 0; i < cityTable.rows.length; i++) {
                 var row = cityTable.rows[i];
-                var cityName = row.cells[0].querySelector('input').value.toUpperCase();
+                var cityName = row.cells[0].querySelector('input').value;
                 var latitude = row.cells[1].querySelector('input').value;
                 var longitude = row.cells[2].querySelector('input').value;
                 if (cityName) {
+                    console.log(cityName);
+                    var cityTemp = cityName.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                    console.log(cityTemp);
+                    var cityTemp2 = cityTemp.toUpperCase();
+                    console.log(cityTemp2);
+                    cityName = cityTemp2;
                     cities.push({ cityName, latitude, longitude });
                 }
             }
